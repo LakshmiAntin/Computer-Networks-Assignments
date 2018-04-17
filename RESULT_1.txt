@@ -1,0 +1,42 @@
+RESULTS:
+	consider the case,
+		r1.txt file contains:
+			119.82.126.182;27;0.0.0.0;e3
+			192.168.100.200;18;0.0.0.0;e1
+			11.2.0.0;16;124.0.0.3;e2
+		i1 i.e address list of interfaces of r1 contains:
+			192.168.0.0/24,192.168.0.1/24,192.168.0.2/24
+		r2.txt file contains:
+			192.168.100.200;18;0.0.0.0;e1
+			119.82.126.182;27;0.0.0.0;e4
+			10.2.3.0;24;0.0.0.0;e2
+			11.2.0.0;16;192.168.0.1;e3
+		i2 i.e address list of interfaces of r2 contains:
+			127.0.0.0/24,127.0.0.1/24,124.0.0.3/24,124.0.0.6/24
+
+	In the table format:
+		r1's routing table:
+		destination address        mask length         next hop router address         interface
+                119.82.126.182                27                 0.0.0.0                          e3
+		192.168.100.200               18                 0.0.0.0                          e1
+                11.2.0.0                      16                 124.0.0.3                        e2
+
+
+                 
+ 
+                r2's routing table:
+		destination address        mask length         next hop router address          interface
+                192.168.100.200                18                 0.0.0.0                          e1
+                119.82.126.182                 27                 0.0.0.0                          e4
+                10.2.3.0                       24                 0.0.0.0                          e2
+                11.2.0.0                       16                 192.168.0.1                      e3
+
+
+
+	for these two routers,if a packet with destination address 11.2.0.0 comes to the router 1,then the packet gets forwarded to router 2's interface 124.0.0.3 via an interface e2 of router 1 i.e 192.168.0.1.For the same destination address in router 2's routing table, next hop address is 192.168.0.1 i.e interface e2 of router 1 and is forwarded via interface e3 of router 2 i.e 125.0.0.3/24.So the packet with an destination address 11.2.0.0 is always stuck in the loop and doesnot reach the destination.
+	
+
+	The asn2.9.py prints the ip address i.e 11.2.0.0     
+
+
+	if there is no routing loop then appropriate message is printed          
